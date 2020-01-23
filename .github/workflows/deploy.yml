@@ -20,11 +20,7 @@ jobs:
         run: ./mdbook build
 
       - name: Deploy
-        if: success()
-        uses: crazy-max/ghaction-github-pages@v1
-        with:
-          target_branch: master
-          build_dir: book
+        uses: maxheld83/ghpages@v0.2.1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BUILD_DIR: mdbook
           GITHUB_PAC: ${{ secrets.TOKEN }}
