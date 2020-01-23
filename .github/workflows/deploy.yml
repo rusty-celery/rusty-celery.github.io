@@ -1,13 +1,29 @@
-on: push
+on:
+  push:
+    branches:
+      - code
 name: Build and deploy on push
 jobs:
-  build:
-    name: shalzz/zola-deploy-action
+  publish:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: shalzz/zola-deploy-action
-      uses: shalzz/zola-deploy-action@master
-      env:
-        PAGES_BRANCH: master
-        TOKEN: ${{ secrets.TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Install mdBook
+        run: |
+          wget 'https://github.com/rust-lang/mdBook/releases/download/v0.3.5/mdbook-v0.3.5-x86_64-unknown-linux-gnu.tar.gz' --output-document 'mdbook.tar.gz'
+          tar -zxvf mdbook.tar.gz
+
+      - name: Build
+        run: mdbook
+
+      - name: Deploy
+        if: success()
+        uses: crazy-max/ghaction-github-pages@v1
+        with:
+          target_branch: master
+          build_dir: book
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_PAC: ${{ secrets.TOKEN }}
