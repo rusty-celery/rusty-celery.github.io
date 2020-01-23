@@ -17,7 +17,7 @@ jobs:
           ls
 
       - name: Build
-        run: ./mdbook
+        run: ./mdbook build
 
       - name: Deploy
         if: success()
