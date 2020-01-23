@@ -23,4 +23,4 @@ jobs:
         uses: maxheld83/ghpages@v0.2.1
         env:
           BUILD_DIR: book
-          GITHUB_PAC: ${{ secrets.TOKEN }}
+          GH_PAT: ${{ secrets.TOKEN }}
