@@ -7,4 +7,5 @@ title = "Rusty Celery"
 
 [output.html]
 default-theme = "Ayu"
+no-section-label = true
 git-repository-url = "https://github.com/rusty-celery/rusty-celery.github.io"
