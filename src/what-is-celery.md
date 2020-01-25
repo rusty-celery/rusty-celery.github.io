@@ -5,4 +5,4 @@ It comes with an idiomatic async API driven by the performant [tokio.rs](https:/
 
 > Since Rusty Celery adheres to the Celery protocol, you can send tasks from a Python Celery application to a Rust worker or vice versa.
 
-Rusty Celery is [developed on GitHub](https://github.com/rusty-celery) as an open source, community effort and is backed by a [Structurely](https://structurely.com/), a start-up building conversation AI.
+Rusty Celery is [developed on GitHub](https://github.com/rusty-celery) as an open source community effort and is backed by [Structurely](https://structurely.com/), a start-up building conversation AI.
