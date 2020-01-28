@@ -6,7 +6,23 @@ In some cases this means the Rust equivalent is a little more verbose or takes a
 
 ### Registering tasks
 
-In Python you can register tasks by dynamically importing them at runtime through the [`imports`](https://docs.celeryproject.org/en/stable/userguide/configuration.html#imports) configuration field, but in Rust you need to manually register all tasks using the [`Celery::register_task`](https://docs.rs/celery/*/celery/struct.Celery.html#method.register_task) method.
+In Python you can register tasks by dynamically importing them at runtime through the [`imports`](https://docs.celeryproject.org/en/stable/userguide/configuration.html#imports) configuration field, but in Rust you need to manually register all tasks using the [`Celery::register_task`](https://docs.rs/celery/*/celery/struct.Celery.html#method.register_task) method:
+
+```rust,no_run
+# #![allow(non_upper_case_globals)]
+# use celery::{self, task, AMQPBroker};
+# use exitfailure::ExitFailure;
+# celery::celery_app!(
+#     my_app,
+#     AMQPBroker { std::env::var("AMQP_ADDR").unwrap() },
+# );
+#[task]
+fn add(x: i32, y: i32) -> i32 {
+    x + y
+}
+
+my_app.register_task::<add>().unwrap();
+```
 
 ### Running a worker
 
