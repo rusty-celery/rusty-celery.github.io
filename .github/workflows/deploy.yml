@@ -39,7 +39,9 @@ jobs:
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Build Crate
-        run: ./cargo build
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
 
       - name: Build Book
         run: ./mdbook build
