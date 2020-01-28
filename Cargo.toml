@@ -1,0 +1,13 @@
+[package]
+name = "rusty-celery-book"
+version = "0.1.0"
+authors = ["epwalsh <epwalsh10@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+tokio = { version = "0.2", features = ["full"] }
+celery = { git = "https://github.com/rusty-celery/rusty-celery", rev = "908f2937ffefa1b55145b4b05f7842e970604b19" }
+exitfailure = "0.5.1"
+log = "0.4"
+env_logger = "0.7"
+serde = "1.0"
