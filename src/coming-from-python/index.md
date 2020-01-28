@@ -8,7 +8,7 @@ In some cases this means the Rust equivalent is a little more verbose or takes a
 
 In Python you can register tasks by dynamically importing them at runtime through the [`imports`](https://docs.celeryproject.org/en/stable/userguide/configuration.html#imports) configuration field, but in Rust you need to manually register all tasks using the [`Celery::register_task`](https://docs.rs/celery/*/celery/struct.Celery.html#method.register_task) method:
 
-```rust,no_run
+```rust,no_run,noplaypen
 # #![allow(non_upper_case_globals)]
 # use celery::{self, task, AMQPBroker};
 # use exitfailure::ExitFailure;
@@ -32,7 +32,7 @@ Note that `Celery::consume` is an `async` method though, which means you need an
 
 Here is a complete example of a worker application:
 
-```rust,no_run
+```rust,no_run,noplaypen
 #![allow(non_upper_case_globals)]
 
 use celery::{self, task, AMQPBroker};
