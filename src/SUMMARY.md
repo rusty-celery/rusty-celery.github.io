@@ -2,9 +2,10 @@
 
 [What is Rusty Celery?](what-is-celery.md)
 
-- [Getting started](getting-started/index.md)
-- [Best practices](best-practices/index.md)
+- [Getting Started](getting-started/index.md)
+- [Best Practices](best-practices/index.md)
+- [Coming from Python?](coming-from-python/index.md)
 
 ---
 
-[Additional resources](additional-resources.md)
+[Additional Resources](additional-resources.md)

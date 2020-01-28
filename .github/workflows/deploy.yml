@@ -2,13 +2,26 @@ on:
   push:
     branches:
       - code
-name: Build and deploy on push
+  pull_request:
+    branches:
+      - code
+name: Build, test, deploy
 jobs:
-  publish:
+  build_test_deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+
+      - name: Run Checks
+        run: ./checks.sh
+
+      - name: Install Rust Stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          components: rustfmt, clippy
+          override: true
 
       - name: Install mdBook
         run: |
@@ -16,11 +29,34 @@ jobs:
           tar -zxvf mdbook.tar.gz
           ls
 
-      - name: Build
+      - name: Cache Cargo Registry
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache Cargo Build
+        uses: actions/cache@v1
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build Crate
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+
+      - name: Build Book
         run: ./mdbook build
+
+      - name: Test Examples
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
 
       - name: Deploy
         uses: maxheld83/ghpages@v0.2.1
+        if: github.ref == 'refs/heads/code'
         env:
           BUILD_DIR: book
           GH_PAT: ${{ secrets.TOKEN }}

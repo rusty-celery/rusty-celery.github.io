@@ -1,4 +1,4 @@
-# Additional resources
+# Additional Resources
 
 ## Quick links
 
