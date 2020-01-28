@@ -47,7 +47,9 @@ jobs:
         run: ./mdbook build
 
       - name: Test Examples
-        run: ./mdbook test -L ./target/debug/deps
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
 
       - name: Deploy
         uses: maxheld83/ghpages@v0.2.1

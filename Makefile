@@ -1,8 +1,6 @@
 .PHONY : test
 test :
-	cargo build
-	mdbook build
-	mdbook test -L ./target/debug/deps
+	cargo test
 
 .PHONY: create-branch
 create-branch :

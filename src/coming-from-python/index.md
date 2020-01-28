@@ -14,9 +14,31 @@ While Python Celery provides a CLI that you can use to run a worker, in Rust you
 
 Note that `Celery::consume` is an `async` method though, which means you need an async runtime to execute it. Luckily this is provided by [`tokio`](https://docs.rs/tokio/*/tokio/) and is as simple as declaring your `main` function `async` and decorating it with the `tokio::main` macro.
 
-```rust
-# extern crate celery;
-use celery::Celery;
+Here is a complete example of a worker application:
 
-let x = 2;
+```rust,no_run
+#![allow(non_upper_case_globals)]
+
+use celery::{self, task, AMQPBroker};
+use exitfailure::ExitFailure;
+
+#[task]
+fn add(x: i32, y: i32) -> i32 {
+    x + y
+}
+
+celery::celery_app!(
+    celery_app,
+    AMQPBroker { std::env::var("AMQP_ADDR").unwrap() },
+    tasks = [add],
+    prefetch_count = 2,
+    default_queue_name = "celery-rs",
+);
+
+#[tokio::main]
+async fn main() -> Result<(), ExitFailure> {
+    env_logger::init();
+    celery_app.consume("celery-rs").await?;
+    Ok(())
+}
 ```
