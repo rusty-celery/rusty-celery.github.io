@@ -54,7 +54,7 @@ celery::celery_app!(
 #[tokio::main]
 async fn main() -> Result<(), ExitFailure> {
     env_logger::init();
-    celery_app.consume("celery-rs").await?;
+    celery_app.consume().await?;
     Ok(())
 }
 ```
