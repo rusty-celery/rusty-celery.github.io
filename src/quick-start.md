@@ -1,6 +1,6 @@
 # Quick Start
 
-Rusty Celery is provided as the [`celery`](https://crates.io/crates/celery) library on crates.io. To get started, add `celery` as a dependency to your project. Then you can define define tasks by decorating functions with the [`task`](https://docs.rs/celery/*/celery/attr.task.html) attribute:
+Rusty Celery is provided as the [`celery`](https://crates.io/crates/celery) library on crates.io. To get started, add `celery` as a dependency to your project. Then you can define tasks by decorating functions with the [`task`](https://docs.rs/celery/*/celery/attr.task.html) attribute:
 
 ```rust,noplaypen
 # use celery::task;
