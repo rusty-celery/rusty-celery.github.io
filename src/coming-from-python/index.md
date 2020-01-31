@@ -6,15 +6,16 @@ In some cases this means the Rust equivalent is a little more verbose or takes a
 
 ### Registering tasks
 
-In Python you can register tasks by dynamically importing them at runtime through the [`imports`](https://docs.celeryproject.org/en/stable/userguide/configuration.html#imports) configuration field, but in Rust you need to manually register all tasks using the [`Celery::register_task`](https://docs.rs/celery/*/celery/struct.Celery.html#method.register_task) method:
+In Python you can register tasks by dynamically importing them at runtime through the [`imports`](https://docs.celeryproject.org/en/stable/userguide/configuration.html#imports) configuration field, but in Rust you need to manually register all tasks either within the [`celery_app`](https://docs.rs/celery/*/celery/macro.celery_app.html) macro or using the [`Celery::register_task`](https://docs.rs/celery/*/celery/struct.Celery.html#method.register_task) method:
 
 ```rust,no_run,noplaypen
 # #![allow(non_upper_case_globals)]
 # use celery::{self, task, AMQPBroker};
 # use exitfailure::ExitFailure;
-# celery::celery_app!(
-#     my_app,
-#     AMQPBroker { std::env::var("AMQP_ADDR").unwrap() },
+# let my_app = celery::celery_app!(
+#     broker = AMQPBroker { std::env::var("AMQP_ADDR").unwrap() },
+#     tasks = [],
+#     task_routes = [],
 # );
 #[task]
 fn add(x: i32, y: i32) -> i32 {
@@ -43,18 +44,20 @@ fn add(x: i32, y: i32) -> i32 {
     x + y
 }
 
-celery::celery_app!(
-    celery_app,
-    AMQPBroker { std::env::var("AMQP_ADDR").unwrap() },
-    tasks = [add],
-    prefetch_count = 2,
-    default_queue_name = "celery-rs",
-);
-
 #[tokio::main]
 async fn main() -> Result<(), ExitFailure> {
     env_logger::init();
+
+    let celery_app = celery::celery_app!(
+        broker = AMQPBroker { std::env::var("AMQP_ADDR").unwrap() },
+        tasks = [add],
+        task_routes = [],
+        prefetch_count = 2,
+        default_queue = "celery-rs",
+    );
+
     celery_app.consume().await?;
+
     Ok(())
 }
 ```
