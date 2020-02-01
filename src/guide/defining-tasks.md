@@ -29,23 +29,23 @@ For example, to give a task a custom name and set a timeout:
 use tokio::time::{self, Duration};
 
 #[task(name = "sleep", timeout = 5)]
-fn delay(secs: u64) {
+async fn delay(secs: u64) {
     time::delay_for(Duration::from_secs(secs)).await
 }
 ```
 
+> NOTE: In this example the `delay` function was marked `async`, but it actually would have compiled without `async` as well because internally tasks are always run as async functions.
+
 ## Error handling
 
 As demonstrated below in [Implementation details](#implementation-details), the `#[task]` attribute macro will wrap the return value
-of the function in `Result<Self::Returns, Error>`.
-Therefore the recommended way to propogate errors when defining a task is to use
-`.context("...")?` on `Result` types within the task body:
+of the function in `Result<Self::Returns, celery::Error>`. This means that you'll have to coerce any errors that could arise in your task to a [`celery::Error`](https://docs.rs/celery/*/celery/struct.Error.html) with the right [`ErrorKind`](https://docs.rs/celery/*/celery/enum.ErrorKind.html). The recommended way to do this is by using `.context("...")?` on `Result` types within the task body:
 
 ```rust,noplaypen
 use celery::{task, ResultExt};
 
 #[task]
-fn read_some_file() -> String {
+async fn read_some_file() -> String {
     tokio::fs::read_to_string("some_file")
         .await
         .context("File does not exist")?
@@ -53,8 +53,7 @@ fn read_some_file() -> String {
 ```
 
 The `.context` method on a `Result` comes from the [`ResultExt`](https://docs.rs/celery/*/celery/trait.ResultExt.html) trait.
-This is used to provide additional human-readable context to the error and also
-to convert it into the expected [`Error`](https://docs.rs/celery/*/celery/struct.Error.html) type.
+This is used to provide additional human-readable context to the error and to convert it to a `celery::Error` with error kind [`UnexpectedError`](https://docs.rs/celery/*/celery/enum.ErrorKind.html#variant.UnexpectedError).
 
 ## Positional vs keyword parameters
 
@@ -77,7 +76,7 @@ Any parameters that are [`Option<T>`](https://doc.rust-lang.org/stable/std/optio
 use tokio::time::{self, Duration};
 
 #[task]
-fn delay(secs: Option<u64>) {
+async fn delay(secs: Option<u64>) {
     let secs = secs.unwrap_or(10);
     time::delay_for(Duration::from_secs(secs)).await
 }
