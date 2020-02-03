@@ -34,12 +34,18 @@ async fn delay(secs: u64) {
 }
 ```
 
-> NOTE: In this example the `delay` function was marked `async`, but it actually would have compiled without `async` as well because internally tasks are always run as async functions.
+> 💡 In this example the `delay` function was marked `async`, but it actually would have compiled without `async` as well because internally tasks are always run as async functions.
 
 ## Error handling
 
 As demonstrated below in [Implementation details](#implementation-details), the `#[task]` attribute macro will wrap the return value
-of the function in `Result<Self::Returns, celery::Error>`. This means that you'll have to coerce any errors that could arise in your task to a [`celery::Error`](https://docs.rs/celery/*/celery/struct.Error.html) with the right [`ErrorKind`](https://docs.rs/celery/*/celery/enum.ErrorKind.html). The recommended way to do this is by using `.context("...")?` on `Result` types within the task body:
+of the function in a `Result<T, celery::Error>`, where `T` is whatever type the function you define returns (like `i32` in the `add` task above).
+
+As a consequence you'll have to coerce any errors that could occur in your task to a [`celery::Error`](https://docs.rs/celery/*/celery/struct.Error.html) with the right [`ErrorKind`](https://docs.rs/celery/*/celery/enum.ErrorKind.html) and then propogate those errors upwards using the [`?`](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#propagating-errors) operator (or the `try!` macro).
+
+There are two error kinds in particular that are meant as catch-alls for any other type of error that could arise in your task: [`ErrorKind::UnexpectedError`](https://docs.rs/celery/*/celery/enum.ErrorKind.html#variant.UnexpectedError) and [`ErrorKind::ExpectedError`](https://docs.rs/celery/*/celery/enum.ErrorKind.html#variant.ExpectedError). The latter should be used for errors that will occasionally happen due to factors outside of your control - such as a third party service being temporarily unavailable - while `UnexpectedError` should be reserved to indicate a bug or that a critical resource is missing.
+
+One way to convert into either of those is by using [`.map_err`](https://doc.rust-lang.org/std/result/enum.Result.html#method.map_err). There is also a shortcut for converting to an `UnexpectedError` that comes from the [`ResultExt`](https://docs.rs/celery/*/celery/trait.ResultExt.html) trait. Namely, the `.context` method. This followed by the `?` operator is the recommended way to propogate an `UnexpectedError`:
 
 ```rust,noplaypen
 use celery::{task, ResultExt};
@@ -51,9 +57,6 @@ async fn read_some_file() -> String {
         .context("File does not exist")?
 }
 ```
-
-The `.context` method on a `Result` comes from the [`ResultExt`](https://docs.rs/celery/*/celery/trait.ResultExt.html) trait.
-This is used to provide additional human-readable context to the error and to convert it to a `celery::Error` with error kind [`UnexpectedError`](https://docs.rs/celery/*/celery/enum.ErrorKind.html#variant.UnexpectedError).
 
 ## Positional vs keyword parameters
 
@@ -94,7 +97,7 @@ celery_app.send_task("sleep")
 Under the hood a task is just a struct that implements the [`Task`](https://docs.rs/celery/*/celery/trait.Task.html) trait. The `#[task]` proc macro inspects the
 function it is decorating and creates a struct with fields matching the function arguments and
 then provides an implementation of the `Task` trait where the [`Task::run`](https://docs.rs/celery/*/celery/trait.Task.html#method.run) method
-is the body of the function.
+is just a wrapper around the body of the function you wrote.
 
 The `add` task from above essentially expands out to this:
 
@@ -124,7 +127,18 @@ impl Task for add {
     type Returns = i32;
 
     async fn run(mut self) -> Result<Self::Returns, Error> {
-        Ok(self.x + self.y)
+        let x = self.x;
+        let y = self.y;
+        let result = {
+            x + y  // this is the body of the actual function you wrote
+        };
+        Ok(result)
     }
 }
 ```
+
+## Summary
+
+In summary, tasks are easily defined by decorating a function with the `#[task]` macro. Internally the body of this function is wrapped in an async function and the return value is wrapped in a `Result<T, celery::Error>`. This makes it acceptable to use `.await` and `?` directly within your function.
+
+The quickest way to propogate unexpected errors from within your task is by using `.context("...")?` on the `Result`. Since the `.context` method comes from the `ResultExt` trait, you need to have this crate in scope by including a `use celery::ResultExt;` at the top of your module.
