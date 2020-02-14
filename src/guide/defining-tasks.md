@@ -42,7 +42,7 @@ As a consequence you'll have to coerce any errors that could occur in your task 
 
 There are two error kinds in particular that are meant as catch-alls for any other type of error that could arise in your task: [`TaskError::UnexpectedError`](https://docs.rs/celery/*/celery/error/enum.TaskError.html#variant.UnexpectedError) and [`TaskError::ExpectedError`](https://docs.rs/celery/*/celery/error/enum.TaskError.html#variant.ExpectedError). The latter should be used for errors that will occasionally happen due to factors outside of your control - such as a third party service being temporarily unavailable - while `UnexpectedError` should be reserved to indicate a bug or that a critical resource is missing.
 
-One way to convert into either of those is by using [`.map_err`](https://doc.rust-lang.org/std/result/enum.Result.html#method.map_err). There are also shortcuts for converting to an `ExpectedError` or `UnexpectedError` that come from the [`TaskResultExt`](https://docs.rs/celery/*/celery/error/trait.TaskResultExt.html) trait. Namely, the `.as_expected_err` and `.as_unexpected_err` methods. This followed by the `?` operator is the recommended way to propogate an `UnexpectedError`:
+One way to convert into either of those is by using [`.map_err`](https://doc.rust-lang.org/std/result/enum.Result.html#method.map_err). There are also shortcuts for converting to an `ExpectedError` or `UnexpectedError` that come from the [`TaskResultExt`](https://docs.rs/celery/*/celery/error/trait.TaskResultExt.html) trait. Namely, the `.with_expected_err` and `.with_unexpected_err` methods. This followed by the `?` operator is the recommended way to propogate an `UnexpectedError`:
 
 ```rust,noplaypen
 use celery::error::TaskResultExt;
@@ -51,7 +51,7 @@ use celery::error::TaskResultExt;
 async fn read_some_file() -> String {
     tokio::fs::read_to_string("some_file")
         .await
-        .as_unexpected_err("File does not exist")?
+        .with_unexpected_err("File does not exist")?
 }
 ```
 
@@ -138,4 +138,4 @@ impl Task for add {
 
 In summary, tasks are easily defined by decorating a function with the `#[celery::task]` macro. Internally the body of this function is wrapped in an async function and the return value is wrapped in a `Result<T, celery::error::TaskError>`. This makes it acceptable to use `.await` and `?` directly within your function.
 
-The quickest way to propogate expected or unexpected errors from within your task is by using `.as_expected_err("...")?` or `.as_unexpected_err("...")?`,  respectively, on the `Result`.
+The quickest way to propogate expected or unexpected errors from within your task is by using `.with_expected_err("...")?` or `.with_unexpected_err("...")?`,  respectively, on the `Result`.
