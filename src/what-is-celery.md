@@ -17,7 +17,7 @@ The Celery framework is a multiple producer, multiple consumer setup: any number
 
 ### What do I need?
 
-The [`Broker`](https://docs.rs/celery/*/celery/trait.Broker.html) is an integral part in all of this, providing the channel through which producers communicate to consumers and distributing tasks among the available workers. As of writing this, the only officially supported broker is the [`AMQPBroker`](https://docs.rs/celery/*/celery/struct.AMQPBroker.html) which can be used with a [RabbitMQ](https://www.rabbitmq.com/) instance. The RabbitMQ instance would be the actual **broker**, while the `AMQPBroker` struct provides the API that the `Celery` app uses to communicate with it.
+The [`Broker`](https://docs.rs/celery/*/celery/broker/trait.Broker.html) is an integral part in all of this, providing the channel through which producers communicate to consumers and distributing tasks among the available workers. As of writing this, the only officially supported broker is the [`AMQPBroker`](https://docs.rs/celery/*/celery/broker/struct.AMQPBroker.html) which can be used with a [RabbitMQ](https://www.rabbitmq.com/) instance. The RabbitMQ instance would be the actual **broker**, while the `AMQPBroker` struct provides the API that the `Celery` app uses to communicate with it.
 
 There are many RabbitMQ hosting services available, such as [CloudAMQP](https://www.cloudamqp.com/) and [Compose](https://www.compose.com/databases/rabbitmq). Both of these have free tier options for development purposes.
 
