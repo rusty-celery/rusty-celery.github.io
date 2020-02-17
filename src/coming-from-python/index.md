@@ -6,18 +6,17 @@ In some cases this means the Rust equivalent is a little more verbose or takes a
 
 ## Registering tasks
 
-In Python you can register tasks by dynamically importing them at runtime through the [`imports`](https://docs.celeryproject.org/en/stable/userguide/configuration.html#imports) configuration field, but in Rust you need to manually register all tasks either within the [`celery_app`](https://docs.rs/celery/*/celery/macro.celery_app.html) macro or using the [`Celery::register_task`](https://docs.rs/celery/*/celery/struct.Celery.html#method.register_task) method:
+In Python you can register tasks by dynamically importing them at runtime through the [`imports`](https://docs.celeryproject.org/en/stable/userguide/configuration.html#imports) configuration field, but in Rust you need to manually register all tasks either as parameters to the [`app`](https://docs.rs/celery/*/celery/macro.app.html) macro or using the [`Celery::register_task`](https://docs.rs/celery/*/celery/struct.Celery.html#method.register_task) method:
 
 ```rust,no_run,noplaypen
 # #![allow(non_upper_case_globals)]
-# use celery::{self, task, AMQPBroker};
 # use exitfailure::ExitFailure;
-# let my_app = celery::celery_app!(
-#     broker = AMQPBroker { std::env::var("AMQP_ADDR").unwrap() },
+# let my_app = celery::app!(
+#     broker = AMQP { std::env::var("AMQP_ADDR").unwrap() },
 #     tasks = [],
 #     task_routes = [],
 # );
-#[task]
+#[celery::task]
 fn add(x: i32, y: i32) -> i32 {
     x + y
 }
@@ -36,10 +35,9 @@ Here is a complete example of a worker application:
 ```rust,no_run,noplaypen
 #![allow(non_upper_case_globals)]
 
-use celery::{self, task, AMQPBroker};
 use exitfailure::ExitFailure;
 
-#[task]
+#[celery::task]
 fn add(x: i32, y: i32) -> i32 {
     x + y
 }
@@ -48,8 +46,8 @@ fn add(x: i32, y: i32) -> i32 {
 async fn main() -> Result<(), ExitFailure> {
     env_logger::init();
 
-    let celery_app = celery::celery_app!(
-        broker = AMQPBroker { std::env::var("AMQP_ADDR").unwrap() },
+    let celery_app = celery::app!(
+        broker = AMQP { std::env::var("AMQP_ADDR").unwrap() },
         tasks = [add],
         task_routes = [],
         prefetch_count = 2,
@@ -68,6 +66,6 @@ The `consume` method will listen for `SIGINT` and `SIGTERM` signals just like a 
 
 In Python you configure tasks to have a [soft or hard time limit](https://docs.celeryproject.org/en/latest/userguide/workers.html#time-limits). A soft time limit allows a task to clean up after itself if it runs over the limit, while a hard limit will force terminate the task.
 
-In Rust we've replaced these with a single configuration option: [`timeout`](https://docs.rs/celery/*/celery/struct.TaskOptions.html#structfield.timeout). A worker will wait `timeout` seconds for a task to finish and then will interrupt it if it hasn't completed in time. After a task is interrupted, its [`on_failure`](https://docs.rs/celery/*/celery/trait.Task.html#method.on_failure) callback will be called with the [`TimeoutError`](https://docs.rs/celery/*/celery/enum.ErrorKind.html#variant.TimeoutError) error kind.
+In Rust we've replaced these with a single configuration option: [`timeout`](https://docs.rs/celery/*/celery/task/struct.TaskOptions.html#structfield.timeout). A worker will wait `timeout` seconds for a task to finish and then will interrupt it if it hasn't completed in time. After a task is interrupted, its [`on_failure`](https://docs.rs/celery/*/celery/task/trait.Task.html#method.on_failure) callback will be called with the [`TimeoutError`](https://docs.rs/celery/*/celery/error/enum.TaskError.html#variant.TimeoutError) variant.
 
 > NOTE: It's only possible to interrupt non-blocking operations since tasks don't run in their own dedicated threads.
