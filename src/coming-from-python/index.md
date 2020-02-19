@@ -60,7 +60,7 @@ async fn main() -> Result<(), ExitFailure> {
 }
 ```
 
-The `consume` method will listen for `SIGINT` and `SIGTERM` signals just like a Python worker and will try to clean up finish all pending tasks before shutting down.
+The `consume` method will listen for `SIGINT` and `SIGTERM` signals - just like a Python worker  - and will try to finish all pending tasks before shutting down unless it receives another signal.
 
 ## Time limits vs timeout
 
@@ -68,4 +68,4 @@ In Python you configure tasks to have a [soft or hard time limit](https://docs.c
 
 In Rust we've replaced these with a single configuration option: [`timeout`](https://docs.rs/celery/*/celery/task/struct.TaskOptions.html#structfield.timeout). A worker will wait `timeout` seconds for a task to finish and then will interrupt it if it hasn't completed in time. After a task is interrupted, its [`on_failure`](https://docs.rs/celery/*/celery/task/trait.Task.html#method.on_failure) callback will be called with the [`TimeoutError`](https://docs.rs/celery/*/celery/error/enum.TaskError.html#variant.TimeoutError) variant.
 
-> NOTE: It's only possible to interrupt non-blocking operations since tasks don't run in their own dedicated threads.
+> NOTE: It's only possible to interrupt non-blocking operations since tasks don't run in their own dedicated threads. This means that while a running task is blocking it will not respect its `timeout` until it unblocks. Therefore you should be careful to only use non-blocking IO functions.

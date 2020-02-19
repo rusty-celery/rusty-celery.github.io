@@ -7,9 +7,9 @@ It comes with an idiomatic async API driven by the performant [tokio.rs](https:/
 
 Celery revolves around the concept of a **task**. A task is a unit of work that is requested by a producer to be completed by a consumer / worker.
 
-For example, a social media service may have tasks to notify a user's followers when they post new content. When the user uploads their content to the service's web application, the application acts as the producer sending out the tasks to a set of workers - usually deployed on a separate server or cluster - via a distributed message broker.
+For example, a social media service may need tasks to notify a user's followers when they post new content. When a user uploads their content to the service's website, the website's backend would act as the producer sending out the tasks to a set of workers - usually deployed on a separate server or cluster - via a distributed message broker.
 
-A [`Celery`](https://docs.rs/celery/*/celery/struct.Celery.html) application instance is meant to serve as either the producer or the consumer. In this example the web and worker applications would initialize a `Celery` app in the same way, with the exact same configuration. The web app would then call [`Celery::send_task`](https://docs.rs/celery/*/celery/struct.Celery.html#method.send_task) to produce a task which a worker would receive while it is consuming tasks through the [`Celery::consume`](https://docs.rs/celery/*/celery/struct.Celery.html#method.consume) method.
+A [`Celery`](https://docs.rs/celery/*/celery/struct.Celery.html) application instance is meant to serve as either the producer or the consumer. In this example, both the website backend and the worker applications would initialize a `Celery` app in the same way, with the exact same configuration. The web backend would then call [`Celery::send_task`](https://docs.rs/celery/*/celery/struct.Celery.html#method.send_task) to produce a task which a worker would receive while it is consuming tasks through the [`Celery::consume`](https://docs.rs/celery/*/celery/struct.Celery.html#method.consume) method.
 
 ### Built to scale
 
