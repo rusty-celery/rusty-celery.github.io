@@ -11,6 +11,8 @@ In Python you can register tasks by dynamically importing them at runtime throug
 ```rust,no_run,noplaypen
 # #![allow(non_upper_case_globals)]
 # use exitfailure::ExitFailure;
+# #[tokio::main]
+# async fn main() -> Result<(), ExitFailure> {
 # let my_app = celery::app!(
 #     broker = AMQP { std::env::var("AMQP_ADDR").unwrap() },
 #     tasks = [],
@@ -21,7 +23,9 @@ fn add(x: i32, y: i32) -> i32 {
     x + y
 }
 
-my_app.register_task::<add>().unwrap();
+my_app.register_task::<add>().await.unwrap();
+# Ok(())
+# }
 ```
 
 ## Running a worker
