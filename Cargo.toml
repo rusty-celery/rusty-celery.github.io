@@ -7,7 +7,7 @@ edition = "2018"
 [dependencies]
 async-trait = "0.1"
 tokio = { version = "0.2", features = ["full"] }
-celery = { git = "https://github.com/rusty-celery/rusty-celery", branch = "task-params" }
+celery = { git = "https://github.com/rusty-celery/rusty-celery" }
 # celery = { path = "../rusty-celery" }
 exitfailure = "0.5.1"
 log = "0.4"
