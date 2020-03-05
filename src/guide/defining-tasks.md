@@ -23,6 +23,8 @@ will be set to the name of the function being decorated.
 - `max_retry_delay` (u32): The maximum number of seconds to wait before retrying after failure.
 - `acks_late` (bool): If true, the broker message corresponding to the task will be ackknowledged after the task finishes, instead of before.
 - `bind` (bool): If true, the function will be bound to the task instance, i.e. it will be like an instance method. Therefore when `bind = true`, the first argument to the function has to have type `&Self`. Note however that Rust won't allow you to name this argument `self`, as that is a reserved keyword. Instead, use something like `task` or just `t`.
+- `on_failure` (function): An async callback function to run when the task fails. Should accept a reference to a task instance and a reference to a `TaskError`.
+- `on_success` (function): An async callback function to run when the task succeeds. Should accept a reference to a task instance and a reference to the value returned by the task.
 
 For example, to give a task a custom name and set a timeout:
 
@@ -106,6 +108,36 @@ So you could call this task from Python with or without providing a value for `s
 ```python,noplaypen
 celery_app.send_task("sleep", args=[10])
 celery_app.send_task("sleep")
+```
+
+## Callbacks
+
+You can set custom callbacks to run when a task fails or succeeds through the `on_failure` and `on_success` options to the `task` macro:
+
+```rust,noplaypen
+use celery::task::Task;
+use celery::error::TaskError;
+use tokio::time::{self, Duration};
+
+#[celery::task(
+    timeout = 10,
+    on_failure = failure_callback,
+    on_success = success_callback,
+)]
+async fn sleep(secs: u64) {
+    time::delay_for(Duration::from_secs(secs)).await
+}
+
+async fn failure_callback<T: Task>(task: &T, err: &TaskError) {
+    match err {
+        TaskError::TimeoutError => println!("Oops! Task {} timed out!", task.name()),
+        _ => println!("Hmm task {} failed with {:?}", task.name(), err),
+    };
+}
+
+async fn success_callback<T: Task>(task: &T, _ret: &T::Returns) {
+    println!("{} succeeded!", task.name());
+}
 ```
 
 ## Summary
