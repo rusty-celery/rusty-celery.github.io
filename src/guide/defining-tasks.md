@@ -13,18 +13,7 @@ fn add(x: i32, y: i32) -> i32 {
 
 Under the hood a task is just a struct that implements the [`Task`](https://docs.rs/celery/*/celery/task/trait.Task.html) trait. When you decorate a function with the task macro, this creates a struct and implements the `Task` trait so that [`Task::run`](https://docs.rs/celery/*/celery/task/trait.Task.html#method.run) calls the function you've defined.
 
-The macro accepts the following optional parameters:
-
-- `name` (string literal): The name to use when registering the task. Should be unique. If not given the name
-will be set to the name of the function being decorated.
-- `timeout` (u32): The maximum number of seconds that the task is allowed to run. Note that this can only be enforced for tasks that are non-blocking, such as tasks that call async IO functions.
-- `max_retries` (u32): The maximum number of times to retry the task if it fails.
-- `min_retry_delay` (u32): The minimum number of seconds to wait before retrying after failure.
-- `max_retry_delay` (u32): The maximum number of seconds to wait before retrying after failure.
-- `acks_late` (bool): If true, the broker message corresponding to the task will be ackknowledged after the task finishes, instead of before.
-- `bind` (bool): If true, the function will be bound to the task instance, i.e. it will be like an instance method. Therefore when `bind = true`, the first argument to the function has to have type `&Self`. Note however that Rust won't allow you to name this argument `self`, as that is a reserved keyword. Instead, use something like `task` or just `t`.
-- `on_failure` (function): An async callback function to run when the task fails. Should accept a reference to a task instance and a reference to a `TaskError`.
-- `on_success` (function): An async callback function to run when the task succeeds. Should accept a reference to a task instance and a reference to the value returned by the task.
+The macro accepts a number of [optional parameters](https://docs.rs/celery/*/celery/attr.task.html#parameters).
 
 For example, to give a task a custom name and set a timeout:
 
