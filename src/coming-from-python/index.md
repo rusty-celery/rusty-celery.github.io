@@ -11,6 +11,7 @@ In Python you can register tasks by dynamically importing them at runtime throug
 ```rust,no_run,noplaypen
 # #![allow(non_upper_case_globals)]
 # use exitfailure::ExitFailure;
+# use celery::TaskResult;
 # #[tokio::main]
 # async fn main() -> Result<(), ExitFailure> {
 # let my_app = celery::app!(
@@ -19,8 +20,8 @@ In Python you can register tasks by dynamically importing them at runtime throug
 #     task_routes = [],
 # );
 #[celery::task]
-fn add(x: i32, y: i32) -> i32 {
-    x + y
+fn add(x: i32, y: i32) -> TaskResult<i32> {
+    Ok(x + y)
 }
 
 my_app.register_task::<add>().await.unwrap();
@@ -32,18 +33,19 @@ my_app.register_task::<add>().await.unwrap();
 
 While Python Celery provides a CLI that you can use to run a worker, in Rust you'll have to implement your own worker binary. However this is a lot easier than it sounds. At a minimum you just need to initialize your [`Celery`](https://docs.rs/celery/*/celery/struct.Celery.html) application, define and register your tasks, and run the [`Celery::consume`](https://docs.rs/celery/*/celery/struct.Celery.html#method.consume) method within your `main` function.
 
-Note that `Celery::consume` is an `async` method though, which means you need an async runtime to execute it. Luckily this is provided by [`tokio`](https://docs.rs/tokio/*/tokio/) and is as simple as declaring your `main` function `async` and decorating it with the `tokio::main` macro.
+Note that `Celery::consume` is an `async` method, which means you need an async runtime to execute it. Luckily this is provided by [`tokio`](https://docs.rs/tokio/*/tokio/) and is as simple as declaring your `main` function `async` and decorating it with the `tokio::main` macro.
 
 Here is a complete example of a worker application:
 
 ```rust,no_run,noplaypen
 #![allow(non_upper_case_globals)]
 
+use celery::TaskResult;
 use exitfailure::ExitFailure;
 
 #[celery::task]
-fn add(x: i32, y: i32) -> i32 {
-    x + y
+fn add(x: i32, y: i32) -> TaskResult<i32> {
+    Ok(x + y)
 }
 
 #[tokio::main]
