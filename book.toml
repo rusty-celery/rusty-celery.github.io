@@ -6,6 +6,6 @@ src = "src"
 title = "Rusty Celery"
 
 [output.html]
-default-theme = "Rust"
+default-theme = "Coal"
 no-section-label = true
 git-repository-url = "https://github.com/rusty-celery/rusty-celery.github.io"
