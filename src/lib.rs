@@ -6,6 +6,7 @@ doctest!("./what-is-celery.md");
 doctest!("./quick-start.md");
 doctest!("./guide/index.md");
 doctest!("./guide/defining-tasks.md");
+doctest!("./guide/running-workers.md");
 doctest!("./best-practices/index.md");
 doctest!("./coming-from-python/index.md");
 doctest!("./additional-resources.md");
