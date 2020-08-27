@@ -28,11 +28,3 @@ my_app.register_task::<add>().await.unwrap();
 # Ok(())
 # }
 ```
-
-## Time limits vs timeout
-
-In Python you configure tasks to have a [soft or hard time limit](https://docs.celeryproject.org/en/latest/userguide/workers.html#time-limits). A soft time limit allows a task to clean up after itself if it runs over the limit, while a hard limit will force terminate the task.
-
-In Rust we've replaced these with a single configuration option: [`timeout`](https://docs.rs/celery/*/celery/task/struct.TaskOptions.html#structfield.timeout). A worker will wait `timeout` seconds for a task to finish and then will interrupt it if it hasn't completed in time. After a task is interrupted, its [`on_failure`](https://docs.rs/celery/*/celery/task/trait.Task.html#method.on_failure) callback will be called with the [`TimeoutError`](https://docs.rs/celery/*/celery/error/enum.TaskError.html#variant.TimeoutError) variant.
-
-> NOTE: It's only possible to interrupt non-blocking operations since tasks don't run in their own dedicated threads. This means that while a running task is blocking it will not respect its `timeout` until it unblocks. Therefore you should be careful to only use non-blocking IO functions.

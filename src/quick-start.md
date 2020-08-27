@@ -68,8 +68,7 @@ my_app.consume().await?;
 # }
 ```
 
-<br/>
-<br/>
+## Examples
 
 A full working example is provided in the [`examples/`](https://github.com/rusty-celery/rusty-celery/tree/master/examples) directory on GitHub. The includes a Celery app implemented in both Rust and Python with an AMQP broker. The only mandatory system requirement other than Rust is Docker, which is needed to run a RabbitMQ instance for the broker.
 
@@ -98,14 +97,14 @@ From another terminal you can then send tasks to the worker from Rust with
 cargo run --example celery_app produce
 ```
 
-If you have Python and the [celery](http://www.celeryproject.org/) Python library installed, you can also produce tasks from the Python app with
+If you have Python and the [celery](http://www.celeryproject.org/) Python library installed, you can also consume or produce tasks from the Python app with
 
 ```bash
-python examples/celery_app.py
+python examples/celery_app.py consume
 ```
 
-Or run a Python worker with
+or
 
 ```bash
-celery --app=celery_app.my_app worker --workdir=examples --loglevel=info
+python examples/celery_app.py produce
 ```
