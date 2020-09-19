@@ -3,7 +3,7 @@
 Rusty Celery is provided as the [`celery`](https://crates.io/crates/celery) library on crates.io. To get started, add `celery` as a dependency to your project. Then you can define tasks by decorating functions with the [`task`](https://docs.rs/celery/*/celery/attr.task.html) attribute:
 
 ```rust,noplaypen
-use celery::TaskResult;
+use celery::prelude::*;
 
 #[celery::task]
 fn add(x: i32, y: i32) -> TaskResult<i32> {
@@ -14,7 +14,7 @@ fn add(x: i32, y: i32) -> TaskResult<i32> {
 And create a [`Celery`](https://docs.rs/celery/*/celery/struct.Celery.html) app with the [`app`](https://docs.rs/celery/*/celery/macro.app.html) macro:
 
 ```rust,no_run,noplaypen
-# use celery::TaskResult;
+# use celery::prelude::*;
 # #[celery::task]
 # fn add(x: i32, y: i32) -> TaskResult<i32> {
 #     Ok(x + y)
@@ -30,7 +30,7 @@ The Celery app can be used as either a producer or consumer (worker). To send ta
 queue for a worker to consume, use the [`Celery::send_task`](https://docs.rs/celery/*/celery/struct.Celery.html#method.send_task) method:
 
 ```rust,no_run,noplaypen
-# use celery::TaskResult;
+# use celery::prelude::*;
 # #[celery::task]
 # fn add(x: i32, y: i32) -> TaskResult<i32> {
 #     Ok(x + y)
@@ -51,7 +51,7 @@ And to act as worker and consume tasks sent to a queue by a producer, use the
 [`Celery::consume`](https://docs.rs/celery/*/celery/struct.Celery.html#method.consume) method:
 
 ```rust,no_run,noplaypen
-# use celery::TaskResult;
+# use celery::prelude::*;
 # #[celery::task]
 # fn add(x: i32, y: i32) -> TaskResult<i32> {
 #     Ok(x + y)

@@ -11,7 +11,7 @@ In Python you can register tasks by dynamically importing them at runtime throug
 ```rust,no_run,noplaypen
 # #![allow(non_upper_case_globals)]
 # use exitfailure::ExitFailure;
-# use celery::TaskResult;
+# use celery::prelude::*;
 # #[tokio::main]
 # async fn main() -> Result<(), ExitFailure> {
 # let my_app = celery::app!(

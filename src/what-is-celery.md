@@ -1,3 +1,36 @@
+<div align="center">
+    <br>
+    <img src="https://raw.githubusercontent.com/rusty-celery/rusty-celery/master/img/rusty-celery-logo-transparent.png"/>
+    <br>
+    <br>
+    <p>
+    A Rust implementation of <a href="https://github.com/celery/celery">Celery</a> for producing and consuming asyncronous tasks with a distributed message queue.
+    </p>
+    <hr/>
+</div>
+<p align="center">
+    <a href="https://github.com/rusty-celery/rusty-celery/actions">
+        <img alt="Build" src="https://github.com/rusty-celery/rusty-celery/workflows/CI/badge.svg?event=push&branch=master">
+    </a>
+    <a href="https://github.com/rusty-celery/rusty-celery/blob/master/LICENSE">
+        <img alt="License" src="https://img.shields.io/github/license/rusty-celery/rusty-celery.svg?color=blue&cachedrop">
+    </a>
+    <a href="https://crates.io/crates/celery">
+        <img alt="Crates" src="https://img.shields.io/crates/v/celery.svg?color=blue">
+    </a>
+    <a href="https://docs.rs/celery/">
+        <img alt="Docs" src="https://img.shields.io/badge/docs.rs-API%20docs-blue">
+    </a>
+    <a href="https://github.com/rusty-celery/rusty-celery/issues?q=is%3Aissue+is%3Aopen+label%3A%22Status%3A+Help+Wanted%22">
+        <img alt="Help wanted" src="https://img.shields.io/github/issues/rusty-celery/rusty-celery/Status%3A%20Help%20Wanted?label=Help%20Wanted">
+    </a>
+    <a href="https://discord.gg/PV3azbB">
+        <img alt="Discord" src="https://img.shields.io/discord/689533070247723078?logo=discord">
+    </a>
+</p>
+<br/>
+
+
 # What is Rusty Celery?
 
 Simply put, this is a Rust implementation of the [Celery](http://www.celeryproject.org/) protocol for producing and consuming asyncronous tasks with a distributed message broker.

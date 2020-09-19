@@ -5,7 +5,7 @@ A **task** represents a unit of work that a `Celery` app can produce or consume.
 The recommended way to define a task is by decorating a function with the [`task`](https://docs.rs/celery/*/celery/attr.task.html) attribute macro:
 
 ```rust,noplaypen
-use celery::TaskResult;
+use celery::prelude::*;
 
 #[celery::task]
 fn add(x: i32, y: i32) -> TaskResult<i32> {
@@ -19,12 +19,12 @@ Under the hood a task is just a struct that implements the [`Task`](https://docs
 
 The macro accepts a number of [optional parameters](https://docs.rs/celery/*/celery/attr.task.html#parameters).
 
-For example, to give a task a custom name and set a timeout:
+For example, to give a task a custom name and set a time limit:
 
 ```rust,noplaypen
 use tokio::time::{self, Duration};
 
-#[celery::task(name = "sleep", timeout = 5)]
+#[celery::task(name = "sleep", time_limit = 5)]
 async fn delay(secs: u64) {
     time::delay_for(Duration::from_secs(secs)).await;
 }
@@ -37,17 +37,17 @@ When a task executes, i.e. when the `Task::run` method is called, it returns a [
 A worker treats certain [`TaskError`](https://docs.rs/celery/*/celery/error/enum.TaskError.html) variants differently. So when your task has points of failure, such as in the `read_some_file` example below, you'll need to coerce those possible error types to the appropriate `TaskError` variant and propogate them upwards:
 
 ```rust,noplaypen
-use celery::{TaskResult, TaskResultExt};
+use celery::prelude::*;
 
 #[celery::task]
 async fn read_some_file() -> TaskResult<String> {
     tokio::fs::read_to_string("some_file")
         .await
-        .with_unexpected_err("File does not exist")
+        .with_unexpected_err(|| "File does not exist")
 }
 ```
 
-Here `tokio::fs::read_to_string("some_file").await` produces a [tokio::io::Result](`https://docs.rs/tokio/0.2.13/tokio/io/type.Result.html`), so we use the helper method `.with_unexpected_err` from the [`TaskResultExt`](https://docs.rs/celery/*/celery/error/trait.TaskResultExt.html) trait to convert this into a `TaskError::UnexpectedError` and then apply the [`?`](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#propagating-errors) operator to propogate it upwards.
+Here `tokio::fs::read_to_string("some_file").await` produces a [tokio::io::Result](`https://docs.rs/tokio/0.2.13/tokio/io/type.Result.html`), so we use the helper method `.with_unexpected_err` from the [`TaskResultExt`](https://docs.rs/celery/*/celery/task/trait.TaskResultExt.html) trait to convert this into a `TaskError::UnexpectedError` and then apply the [`?`](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#propagating-errors) operator to propogate it upwards.
 
 There are two error kinds in particular that are meant as catch-alls for any other type of error that could arise in your task: [`TaskError::UnexpectedError`](https://docs.rs/celery/*/celery/error/enum.TaskError.html#variant.UnexpectedError) and [`TaskError::ExpectedError`](https://docs.rs/celery/*/celery/error/enum.TaskError.html#variant.ExpectedError). The latter should be used for errors that will occasionally happen due to factors outside of your control - such as a third party service being temporarily unavailable - while `UnexpectedError` should be reserved to indicate a bug or that a critical resource is missing.
 
@@ -94,7 +94,7 @@ use celery::error::TaskError;
 use tokio::time::{self, Duration};
 
 #[celery::task(
-    timeout = 10,
+    time_limit = 10,
     on_failure = failure_callback,
     on_success = success_callback,
 )]

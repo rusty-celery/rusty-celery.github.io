@@ -7,7 +7,7 @@ Here is a complete example of a worker application:
 ```rust,no_run,noplaypen
 #![allow(non_upper_case_globals)]
 
-use celery::TaskResult;
+use celery::prelude::*;
 use exitfailure::ExitFailure;
 
 #[celery::task]
