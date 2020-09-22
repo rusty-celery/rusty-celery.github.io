@@ -1,0 +1,528 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js coal">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Rusty Celery</title>
+        
+        <meta name="robots" content="noindex" />
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "coal";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('coal')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="what-is-celery.html">What is Rusty Celery?</a></li><li class="chapter-item expanded "><a href="quick-start.html">Quick Start</a></li><li class="chapter-item expanded "><a href="guide/index.html">Going Deeper</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="guide/defining-tasks.html">Defining Tasks</a></li><li class="chapter-item expanded "><a href="guide/running-workers.html">Running Workers</a></li></ol></li><li class="chapter-item expanded "><a href="best-practices/index.html">Best Practices</a></li><li class="chapter-item expanded "><a href="coming-from-python/index.html">Coming from Python?</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="additional-resources.html">Additional Resources</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rusty Celery</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/rusty-celery/rusty-celery.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div align="center">
+    <br>
+    <img src="https://raw.githubusercontent.com/rusty-celery/rusty-celery/master/img/rusty-celery-logo-transparent.png"/>
+    <br>
+    <br>
+    <p>
+    A Rust implementation of <a href="https://github.com/celery/celery">Celery</a> for producing and consuming asyncronous tasks with a distributed message queue.
+    </p>
+    <hr/>
+</div>
+<p align="center">
+    <a href="https://github.com/rusty-celery/rusty-celery/actions">
+        <img alt="Build" src="https://github.com/rusty-celery/rusty-celery/workflows/CI/badge.svg?event=push&branch=master">
+    </a>
+    <a href="https://github.com/rusty-celery/rusty-celery/blob/master/LICENSE">
+        <img alt="License" src="https://img.shields.io/github/license/rusty-celery/rusty-celery.svg?color=blue&cachedrop">
+    </a>
+    <a href="https://crates.io/crates/celery">
+        <img alt="Crates" src="https://img.shields.io/crates/v/celery.svg?color=blue">
+    </a>
+    <a href="https://docs.rs/celery/">
+        <img alt="Docs" src="https://img.shields.io/badge/docs.rs-API%20docs-blue">
+    </a>
+    <a href="https://github.com/rusty-celery/rusty-celery/issues?q=is%3Aissue+is%3Aopen+label%3A%22Status%3A+Help+Wanted%22">
+        <img alt="Help wanted" src="https://img.shields.io/github/issues/rusty-celery/rusty-celery/Status%3A%20Help%20Wanted?label=Help%20Wanted">
+    </a>
+    <a href="https://discord.gg/PV3azbB">
+        <img alt="Discord" src="https://img.shields.io/discord/689533070247723078?logo=discord">
+    </a>
+</p>
+<br/>
+<h1><a class="header" href="#what-is-rusty-celery" id="what-is-rusty-celery">What is Rusty Celery?</a></h1>
+<p>Simply put, this is a Rust implementation of the <a href="http://www.celeryproject.org/">Celery</a> protocol for producing and consuming asyncronous tasks with a distributed message broker.
+It comes with an idiomatic async API driven by the performant <a href="https://tokio.rs/">tokio.rs</a>, and above all an emphasis on safety.</p>
+<h3><a class="header" href="#how-does-it-work" id="how-does-it-work">How does it work?</a></h3>
+<p>Celery revolves around the concept of a <strong>task</strong>. A task is a unit of work that is requested by a producer to be completed by a consumer / worker.</p>
+<p>For example, a social media service may need tasks to notify a user's followers when they post new content. When a user uploads their content to the service's website, the website's backend would act as the producer sending out the tasks to a set of workers - usually deployed on a separate server or cluster - via a distributed message broker.</p>
+<p>A <a href="https://docs.rs/celery/*/celery/struct.Celery.html"><code>Celery</code></a> application instance is meant to serve as either the producer or the consumer. In this example, both the website backend and the worker applications would initialize a <code>Celery</code> app in the same way, with the exact same configuration. The web backend would then call <a href="https://docs.rs/celery/*/celery/struct.Celery.html#method.send_task"><code>Celery::send_task</code></a> to produce a task which a worker would receive while it is consuming tasks through the <a href="https://docs.rs/celery/*/celery/struct.Celery.html#method.consume"><code>Celery::consume</code></a> method.</p>
+<h3><a class="header" href="#built-to-scale" id="built-to-scale">Built to scale</a></h3>
+<p>The Celery framework is a multiple producer, multiple consumer setup: any number of producer applications can send tasks to any number of workers. Naturally this allows seamless horizontal scaling.</p>
+<h3><a class="header" href="#what-do-i-need" id="what-do-i-need">What do I need?</a></h3>
+<p>The <a href="https://docs.rs/celery/*/celery/broker/trait.Broker.html"><code>Broker</code></a> is an integral part in all of this, providing the channel through which producers communicate to consumers and distributing tasks among the available workers. As of writing this, the only officially supported broker is the <a href="https://docs.rs/celery/*/celery/broker/struct.AMQPBroker.html"><code>AMQPBroker</code></a> which can be used with a <a href="https://www.rabbitmq.com/">RabbitMQ</a> instance. The RabbitMQ instance would be the actual <strong>broker</strong>, while the <code>AMQPBroker</code> struct provides the API that the <code>Celery</code> app uses to communicate with it.</p>
+<p>There are many RabbitMQ hosting services available, such as <a href="https://www.cloudamqp.com/">CloudAMQP</a> and <a href="https://www.compose.com/databases/rabbitmq">Compose</a>. Both of these have free tier options for development purposes.</p>
+<br/>
+<br/>
+<hr />
+<p>Rusty Celery is <a href="https://github.com/rusty-celery">developed on GitHub</a> as an open source community effort.</p>
+<p><a href="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/links/0"><img src="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/images/0" alt="" /></a><a href="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/links/1"><img src="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/images/1" alt="" /></a><a href="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/links/2"><img src="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/images/2" alt="" /></a><a href="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/links/3"><img src="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/images/3" alt="" /></a><a href="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/links/4"><img src="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/images/4" alt="" /></a><a href="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/links/5"><img src="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/images/5" alt="" /></a><a href="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/links/6"><img src="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/images/6" alt="" /></a><a href="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/links/7"><img src="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/images/7" alt="" /></a></p>
+<h1><a class="header" href="#quick-start" id="quick-start">Quick Start</a></h1>
+<p>Rusty Celery is provided as the <a href="https://crates.io/crates/celery"><code>celery</code></a> library on crates.io. To get started, add <code>celery</code> as a dependency to your project. Then you can define tasks by decorating functions with the <a href="https://docs.rs/celery/*/celery/attr.task.html"><code>task</code></a> attribute:</p>
+<pre><code class="language-rust noplaypen">use celery::prelude::*;
+
+#[celery::task]
+fn add(x: i32, y: i32) -&gt; TaskResult&lt;i32&gt; {
+    Ok(x + y)
+}
+</code></pre>
+<p>And create a <a href="https://docs.rs/celery/*/celery/struct.Celery.html"><code>Celery</code></a> app with the <a href="https://docs.rs/celery/*/celery/macro.app.html"><code>app</code></a> macro:</p>
+<pre><code class="language-rust no_run noplaypen"><span class="boring">use celery::prelude::*;
+</span><span class="boring">#[celery::task]
+</span><span class="boring">fn add(x: i32, y: i32) -&gt; TaskResult&lt;i32&gt; {
+</span><span class="boring">    Ok(x + y)
+</span><span class="boring">}
+</span>let my_app = celery::app!(
+    broker = AMQP { std::env::var(&quot;AMQP_ADDR&quot;).unwrap() },
+    tasks = [add],
+    task_routes = [],
+);
+</code></pre>
+<p>The Celery app can be used as either a producer or consumer (worker). To send tasks to a
+queue for a worker to consume, use the <a href="https://docs.rs/celery/*/celery/struct.Celery.html#method.send_task"><code>Celery::send_task</code></a> method:</p>
+<pre><code class="language-rust no_run noplaypen"><span class="boring">use celery::prelude::*;
+</span><span class="boring">#[celery::task]
+</span><span class="boring">fn add(x: i32, y: i32) -&gt; TaskResult&lt;i32&gt; {
+</span><span class="boring">    Ok(x + y)
+</span><span class="boring">}
+</span><span class="boring">#[tokio::main]
+</span><span class="boring">async fn main() -&gt; Result&lt;(), exitfailure::ExitFailure&gt; {
+</span><span class="boring">let my_app = celery::app!(
+</span><span class="boring">    broker = AMQP { std::env::var(&quot;AMQP_ADDR&quot;).unwrap() },
+</span><span class="boring">    tasks = [add],
+</span><span class="boring">    task_routes = [],
+</span><span class="boring">);
+</span>my_app.send_task(add::new(1, 2)).await?;
+<span class="boring">  Ok(())
+</span><span class="boring">}
+</span></code></pre>
+<p>And to act as worker and consume tasks sent to a queue by a producer, use the
+<a href="https://docs.rs/celery/*/celery/struct.Celery.html#method.consume"><code>Celery::consume</code></a> method:</p>
+<pre><code class="language-rust no_run noplaypen"><span class="boring">use celery::prelude::*;
+</span><span class="boring">#[celery::task]
+</span><span class="boring">fn add(x: i32, y: i32) -&gt; TaskResult&lt;i32&gt; {
+</span><span class="boring">    Ok(x + y)
+</span><span class="boring">}
+</span><span class="boring">#[tokio::main]
+</span><span class="boring">async fn main() -&gt; Result&lt;(), exitfailure::ExitFailure&gt; {
+</span><span class="boring">let my_app = celery::app!(
+</span><span class="boring">    broker = AMQP { std::env::var(&quot;AMQP_ADDR&quot;).unwrap() },
+</span><span class="boring">    tasks = [add],
+</span><span class="boring">    task_routes = [],
+</span><span class="boring">);
+</span>my_app.consume().await?;
+<span class="boring">Ok(())
+</span><span class="boring">}
+</span></code></pre>
+<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
+<p>A full working example is provided in the <a href="https://github.com/rusty-celery/rusty-celery/tree/master/examples"><code>examples/</code></a> directory on GitHub. The includes a Celery app implemented in both Rust and Python with an AMQP broker. The only mandatory system requirement other than Rust is Docker, which is needed to run a RabbitMQ instance for the broker.</p>
+<p>To play with the example, first clone the repository:</p>
+<pre><code class="language-bash">git clone https://github.com/rusty-celery/rusty-celery &amp;&amp; cd rusty-celery
+</code></pre>
+<p>Then start the RabbitMQ instance:</p>
+<pre><code class="language-bash">./scripts/brokers/amqp.sh
+</code></pre>
+<p>Once the RabbitMQ Docker container has loaded, you can run a Rust worker in a separate terminal with</p>
+<pre><code class="language-bash">cargo run --example celery_app consume
+</code></pre>
+<p>From another terminal you can then send tasks to the worker from Rust with</p>
+<pre><code class="language-bash">cargo run --example celery_app produce
+</code></pre>
+<p>If you have Python and the <a href="http://www.celeryproject.org/">celery</a> Python library installed, you can also consume or produce tasks from the Python app with</p>
+<pre><code class="language-bash">python examples/celery_app.py consume
+</code></pre>
+<p>or</p>
+<pre><code class="language-bash">python examples/celery_app.py produce
+</code></pre>
+<h1><a class="header" href="#the-rusty-celery-guide" id="the-rusty-celery-guide">The Rusty Celery Guide</a></h1>
+<p>This chapter will walk you through the details of defining and configuring tasks and applications.</p>
+<h1><a class="header" href="#defining-tasks" id="defining-tasks">Defining Tasks</a></h1>
+<p>A <strong>task</strong> represents a unit of work that a <code>Celery</code> app can produce or consume.</p>
+<p>The recommended way to define a task is by decorating a function with the <a href="https://docs.rs/celery/*/celery/attr.task.html"><code>task</code></a> attribute macro:</p>
+<pre><code class="language-rust noplaypen">use celery::prelude::*;
+
+#[celery::task]
+fn add(x: i32, y: i32) -&gt; TaskResult&lt;i32&gt; {
+    Ok(x + y)
+}
+</code></pre>
+<p>If the function has a return value the return type must be a <a href="https://docs.rs/celery/*/celery/task/type.TaskResult.html"><code>TaskResult&lt;T&gt;</code></a>.</p>
+<p>Under the hood a task is just a struct that implements the <a href="https://docs.rs/celery/*/celery/task/trait.Task.html"><code>Task</code></a> trait. When you decorate a function with the task macro, this creates a struct and implements the <code>Task</code> trait so that <a href="https://docs.rs/celery/*/celery/task/trait.Task.html#method.run"><code>Task::run</code></a> calls the function you've defined.</p>
+<p>The macro accepts a number of <a href="https://docs.rs/celery/*/celery/attr.task.html#parameters">optional parameters</a>.</p>
+<p>For example, to give a task a custom name and set a time limit:</p>
+<pre><code class="language-rust noplaypen">use tokio::time::{self, Duration};
+
+#[celery::task(name = &quot;sleep&quot;, time_limit = 5)]
+async fn delay(secs: u64) {
+    time::delay_for(Duration::from_secs(secs)).await;
+}
+</code></pre>
+<h2><a class="header" href="#error-handling" id="error-handling">Error handling</a></h2>
+<p>When a task executes, i.e. when the <code>Task::run</code> method is called, it returns a <a href="https://docs.rs/celery/*/celery/task/type.TaskResult.html"><code>TaskResult&lt;T&gt;</code></a> which is just a <code>Result&lt;T, TaskError&gt;</code>. When an <code>Err(TaskError)</code> is returned, the worker considers the task failed and may send it back to the broker to be retried.</p>
+<p>A worker treats certain <a href="https://docs.rs/celery/*/celery/error/enum.TaskError.html"><code>TaskError</code></a> variants differently. So when your task has points of failure, such as in the <code>read_some_file</code> example below, you'll need to coerce those possible error types to the appropriate <code>TaskError</code> variant and propogate them upwards:</p>
+<pre><code class="language-rust noplaypen">use celery::prelude::*;
+
+#[celery::task]
+async fn read_some_file() -&gt; TaskResult&lt;String&gt; {
+    tokio::fs::read_to_string(&quot;some_file&quot;)
+        .await
+        .with_unexpected_err(|| &quot;File does not exist&quot;)
+}
+</code></pre>
+<p>Here <code>tokio::fs::read_to_string(&quot;some_file&quot;).await</code> produces a <a href="guide/%60https://docs.rs/tokio/0.2.13/tokio/io/type.Result.html%60">tokio::io::Result</a>, so we use the helper method <code>.with_unexpected_err</code> from the <a href="https://docs.rs/celery/*/celery/task/trait.TaskResultExt.html"><code>TaskResultExt</code></a> trait to convert this into a <code>TaskError::UnexpectedError</code> and then apply the <a href="https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#propagating-errors"><code>?</code></a> operator to propogate it upwards.</p>
+<p>There are two error kinds in particular that are meant as catch-alls for any other type of error that could arise in your task: <a href="https://docs.rs/celery/*/celery/error/enum.TaskError.html#variant.UnexpectedError"><code>TaskError::UnexpectedError</code></a> and <a href="https://docs.rs/celery/*/celery/error/enum.TaskError.html#variant.ExpectedError"><code>TaskError::ExpectedError</code></a>. The latter should be used for errors that will occasionally happen due to factors outside of your control - such as a third party service being temporarily unavailable - while <code>UnexpectedError</code> should be reserved to indicate a bug or that a critical resource is missing.</p>
+<h2><a class="header" href="#positional-vs-keyword-parameters" id="positional-vs-keyword-parameters">Positional vs keyword parameters</a></h2>
+<p>Within the <a href="https://docs.celeryproject.org/en/latest/internals/protocol.html#version-2">Celery protocol</a>
+task parameters can be treated as either <code>args</code> (positional) or <code>kwargs</code> (key-word based).
+Both are supported in Rusty Celery, which means you could call the Rust <code>add</code> task defined above from another language like Python in any of the following ways:</p>
+<pre><code class="language-python noplaypen">celery_app.send_task(&quot;add&quot;, args=[1, 2])
+celery_app.send_task(&quot;add&quot;, kwargs={&quot;x&quot;: 1, &quot;y&quot;: 2})
+celery_app.send_task(&quot;add&quot;, args=[1], kwargs={&quot;y&quot;: 2})
+</code></pre>
+<h2><a class="header" href="#optional-parameters" id="optional-parameters">Optional parameters</a></h2>
+<p>Any parameters that are <a href="https://doc.rust-lang.org/stable/std/option/enum.Option.html"><code>Option&lt;T&gt;</code></a> types are automatically treated as optional with a default value of <code>None</code>. For example</p>
+<pre><code class="language-rust noplaypen">use tokio::time::{self, Duration};
+
+#[celery::task]
+async fn delay(secs: Option&lt;u64&gt;) {
+    let secs = secs.unwrap_or(10);
+    time::delay_for(Duration::from_secs(secs)).await;
+}
+</code></pre>
+<p>So you could call this task from Python with or without providing a value for <code>secs</code>:</p>
+<pre><code class="language-python noplaypen">celery_app.send_task(&quot;sleep&quot;, args=[10])
+celery_app.send_task(&quot;sleep&quot;)
+</code></pre>
+<h2><a class="header" href="#callbacks" id="callbacks">Callbacks</a></h2>
+<p>You can set custom callbacks to run when a task fails or succeeds through the <code>on_failure</code> and <code>on_success</code> options to the <code>task</code> macro:</p>
+<pre><code class="language-rust noplaypen">use celery::task::Task;
+use celery::error::TaskError;
+use tokio::time::{self, Duration};
+
+#[celery::task(
+    time_limit = 10,
+    on_failure = failure_callback,
+    on_success = success_callback,
+)]
+async fn sleep(secs: u64) {
+    time::delay_for(Duration::from_secs(secs)).await;
+}
+
+async fn failure_callback&lt;T: Task&gt;(task: &amp;T, err: &amp;TaskError) {
+    match err {
+        TaskError::TimeoutError =&gt; println!(&quot;Oops! Task {} timed out!&quot;, task.name()),
+        _ =&gt; println!(&quot;Hmm task {} failed with {:?}&quot;, task.name(), err),
+    };
+}
+
+async fn success_callback&lt;T: Task&gt;(task: &amp;T, _ret: &amp;T::Returns) {
+    println!(&quot;{} succeeded!&quot;, task.name());
+}
+</code></pre>
+<h2><a class="header" href="#summary" id="summary">Summary</a></h2>
+<p>In summary, tasks are easily defined by decorating a function with the <code>#[celery::task]</code> macro. If the function returns anything the return type has to be a <code>TaskResult&lt;T&gt;</code>. Internally the function is wrapped in a struct that implements the <code>Task</code> trait.</p>
+<p>The quickest way to propogate expected or unexpected errors from within your task is by using <code>.with_expected_err(&quot;...&quot;)?</code> or <code>.with_unexpected_err(&quot;...&quot;)?</code>,  respectively, on the <code>Result</code>.</p>
+<h1><a class="header" href="#running-workers" id="running-workers">Running Workers</a></h1>
+<p>While the Python version of Celery provides a CLI that you can use to run a worker, in Rust you'll have to implement your own worker binary. However this is a lot easier than it sounds. At a minimum you just need to initialize your <a href="https://docs.rs/celery/*/celery/struct.Celery.html"><code>Celery</code></a> application, define and register your tasks, and run the <a href="https://docs.rs/celery/*/celery/struct.Celery.html#method.consume"><code>Celery::consume</code></a> method within an async executor.</p>
+<p>Here is a complete example of a worker application:</p>
+<pre><code class="language-rust no_run noplaypen">#![allow(non_upper_case_globals)]
+
+use celery::prelude::*;
+use exitfailure::ExitFailure;
+
+#[celery::task]
+fn add(x: i32, y: i32) -&gt; TaskResult&lt;i32&gt; {
+    Ok(x + y)
+}
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;(), ExitFailure&gt; {
+    env_logger::init();
+
+    let celery_app = celery::app!(
+        broker = AMQP { std::env::var(&quot;AMQP_ADDR&quot;).unwrap() },
+        tasks = [add],
+        task_routes = [],
+        prefetch_count = 2,
+        acks_late = true,
+        default_queue = &quot;celery-rs&quot;,
+    );
+
+    celery_app.consume().await?;
+
+    Ok(())
+}
+</code></pre>
+<p>The <code>consume</code> method will listen for <code>SIGINT</code> and <code>SIGTERM</code> signals - just like a Python worker  - and will try to finish all pending tasks before shutting down unless it receives another signal.</p>
+<h1><a class="header" href="#best-practices" id="best-practices">Best practices</a></h1>
+<h2><a class="header" href="#acks-early-vs-acks-late" id="acks-early-vs-acks-late">Acks early vs acks late</a></h2>
+<p>Tasks are only removed from a queue when they are acknowledged (&quot;acked&quot;) by the worker that received them. The <a href="https://docs.rs/celery/*/celery/struct.CeleryBuilder.html#method.acks_late"><code>acks_late</code></a> setting determines when a worker will ack a task. When set to <code>true</code>, tasks are acked after the worker finishes executing them. When set to <code>false</code>, they are executed right before the worker starts executing them.</p>
+<p>The default of <code>acks_late</code> is <code>false</code>, however if your tasks are <a href="https://docs.celeryproject.org/en/stable/glossary.html#term-idempotent">idempotent</a> it's strongly recommended that you set <code>acks_late</code> to <code>true</code>. This has two major benefits.</p>
+<p>First, it ensures that if a worker were to crash, any tasks currently executing will be retried automatically by the next available worker.</p>
+<p>Second, it provides a better <a href="https://medium.com/@jayphelps/backpressure-explained-the-flow-of-data-through-software-2350b3e77ce7">back pressure</a> mechanism when used in conjunction with a suitable <a href="https://docs.rs/celery/*/celery/struct.CeleryBuilder.html#method.prefetch_count"><code>prefetch_count</code></a> (see below).</p>
+<h2><a class="header" href="#prefetch-count" id="prefetch-count">Prefetch count</a></h2>
+<p>When initializing your Rust Celery app it's recommended that you <a href="https://docs.rs/celery/*/celery/macro.app.html#optional-parameters">set the <code>prefetch_count</code></a> to a number suitable for your application, especially if you have <code>acks_late</code> set to <code>true</code>.</p>
+<blockquote>
+<p>If you have <code>acks_late</code> set to <code>false</code>, the default <code>prefetch_count</code> is probably sufficient.</p>
+</blockquote>
+<p>The <code>prefetch_count</code> determines how many un-acked tasks (ignoring those with a future ETA) that a worker can hold onto at any point in time. Having <code>prefetch_count</code> too low or too high can create a bottleneck.</p>
+<p>If the number is set too low, workers could be under-utilized. If the number is set too high, workers could be hogging tasks that they can't execute yet, or worse: they could run out of memory from receiving too many tasks and crash.</p>
+<p>Unfortunately finding an optimal prefetch count is easier said than done. It depends on a lot of factors, such as the hardware your workers are running on, the task throughput, and whether your tasks are more CPU-bound or IO-bound.</p>
+<p>The last reason is especially important. A worker running on even a single CPU can probably handle hundreds, if not thousands, of (non-blocking) IO-bound tasks at once. But a worker consuming CPU-bound tasks is essentially limited to executing one task per CPU core. Therefore a good starting point for <code>prefetch_count</code> would be either <code>100 x NUM_CPUS</code> for IO-bound tasks or <code>2 * NUM_CPUS</code> for CPU-bound tasks.</p>
+<h2><a class="header" href="#consuming-blocking--cpu-bound-tasks" id="consuming-blocking--cpu-bound-tasks">Consuming blocking / CPU-bound tasks</a></h2>
+<p>If your tasks are CPU-bound (or otherwise blocking), it's recommended that you use a multi-threaded async runtime, such as <a href="https://docs.rs/tokio/0.2.16/tokio/runtime/index.html#threaded-scheduler">the one</a> provided by <code>tokio</code>. Within the task body you can then call <a href="https://docs.rs/tokio/0.2.16/tokio/task/index.html#block_in_place"><code>tokio::task::block_in_place</code></a> where appropriate.</p>
+<h1><a class="header" href="#coming-from-python" id="coming-from-python">Coming from Python?</a></h1>
+<p>Though a lot of the Rusty Celery API is very similar to the Python equivalent - e.g. defining tasks by decorating functions - there are a few key differences listed here that have arisen because it was either not practical or just not possible to do it the same way as in Python.</p>
+<p>In some cases this means the Rust equivalent is a little more verbose or takes a little more care on the user's end, but ultimately I think you'll find that the downsides of the Rust implementation are heavily outweighed by the benifits it brings: most notably speed, safety, and a much smaller memory footprint.</p>
+<h2><a class="header" href="#registering-tasks" id="registering-tasks">Registering tasks</a></h2>
+<p>In Python you can register tasks by dynamically importing them at runtime through the <a href="https://docs.celeryproject.org/en/stable/userguide/configuration.html#imports"><code>imports</code></a> configuration field, but in Rust you need to manually register all tasks either as parameters to the <a href="https://docs.rs/celery/*/celery/macro.app.html"><code>app</code></a> macro or using the <a href="https://docs.rs/celery/*/celery/struct.Celery.html#method.register_task"><code>Celery::register_task</code></a> method:</p>
+<pre><code class="language-rust no_run noplaypen"><span class="boring">#![allow(non_upper_case_globals)]
+</span><span class="boring">use exitfailure::ExitFailure;
+</span><span class="boring">use celery::prelude::*;
+</span><span class="boring">#[tokio::main]
+</span><span class="boring">async fn main() -&gt; Result&lt;(), ExitFailure&gt; {
+</span><span class="boring">let my_app = celery::app!(
+</span><span class="boring">    broker = AMQP { std::env::var(&quot;AMQP_ADDR&quot;).unwrap() },
+</span><span class="boring">    tasks = [],
+</span><span class="boring">    task_routes = [],
+</span><span class="boring">);
+</span>#[celery::task]
+fn add(x: i32, y: i32) -&gt; TaskResult&lt;i32&gt; {
+    Ok(x + y)
+}
+
+my_app.register_task::&lt;add&gt;().await.unwrap();
+<span class="boring">Ok(())
+</span><span class="boring">}
+</span></code></pre>
+<h1><a class="header" href="#additional-resources" id="additional-resources">Additional Resources</a></h1>
+<h2><a class="header" href="#quick-links" id="quick-links">Quick links</a></h2>
+<ul>
+<li><a href="https://github.com/rusty-celery/rusty-celery">Source code</a></li>
+<li><a href="https://github.com/rusty-celery/rusty-celery.github.io">Source code to this book</a></li>
+<li><a href="https://docs.rs/celery">API documentation</a></li>
+<li><a href="https://crates.io/crates/celery">Rust crate</a></li>
+<li><a href="https://github.com/rusty-celery/rusty-celery/blob/master/LICENSE">License</a></li>
+<li><a href="https://github.com/rusty-celery/rusty-celery/blob/master/CONTRIBUTING.md">Contribution guide</a></li>
+</ul>
+<h2><a class="header" href="#broker-hosting-options" id="broker-hosting-options">Broker hosting options</a></h2>
+<h3><a class="header" href="#rabbitmq-amqp" id="rabbitmq-amqp">RabbitMQ (AMQP)</a></h3>
+<ul>
+<li><a href="https://www.cloudamqp.com/">CloudAMQP</a></li>
+<li><a href="https://www.compose.com/databases/rabbitmq">Compose</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>

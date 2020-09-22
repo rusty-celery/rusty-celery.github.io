@@ -1,0 +1,272 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js coal">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>What is Rusty Celery? - Rusty Celery</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "coal";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('coal')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="what-is-celery.html" class="active">What is Rusty Celery?</a></li><li class="chapter-item expanded "><a href="quick-start.html">Quick Start</a></li><li class="chapter-item expanded "><a href="guide/index.html">Going Deeper</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="guide/defining-tasks.html">Defining Tasks</a></li><li class="chapter-item expanded "><a href="guide/running-workers.html">Running Workers</a></li></ol></li><li class="chapter-item expanded "><a href="best-practices/index.html">Best Practices</a></li><li class="chapter-item expanded "><a href="coming-from-python/index.html">Coming from Python?</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="additional-resources.html">Additional Resources</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rusty Celery</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/rusty-celery/rusty-celery.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div align="center">
+    <br>
+    <img src="https://raw.githubusercontent.com/rusty-celery/rusty-celery/master/img/rusty-celery-logo-transparent.png"/>
+    <br>
+    <br>
+    <p>
+    A Rust implementation of <a href="https://github.com/celery/celery">Celery</a> for producing and consuming asyncronous tasks with a distributed message queue.
+    </p>
+    <hr/>
+</div>
+<p align="center">
+    <a href="https://github.com/rusty-celery/rusty-celery/actions">
+        <img alt="Build" src="https://github.com/rusty-celery/rusty-celery/workflows/CI/badge.svg?event=push&branch=master">
+    </a>
+    <a href="https://github.com/rusty-celery/rusty-celery/blob/master/LICENSE">
+        <img alt="License" src="https://img.shields.io/github/license/rusty-celery/rusty-celery.svg?color=blue&cachedrop">
+    </a>
+    <a href="https://crates.io/crates/celery">
+        <img alt="Crates" src="https://img.shields.io/crates/v/celery.svg?color=blue">
+    </a>
+    <a href="https://docs.rs/celery/">
+        <img alt="Docs" src="https://img.shields.io/badge/docs.rs-API%20docs-blue">
+    </a>
+    <a href="https://github.com/rusty-celery/rusty-celery/issues?q=is%3Aissue+is%3Aopen+label%3A%22Status%3A+Help+Wanted%22">
+        <img alt="Help wanted" src="https://img.shields.io/github/issues/rusty-celery/rusty-celery/Status%3A%20Help%20Wanted?label=Help%20Wanted">
+    </a>
+    <a href="https://discord.gg/PV3azbB">
+        <img alt="Discord" src="https://img.shields.io/discord/689533070247723078?logo=discord">
+    </a>
+</p>
+<br/>
+<h1><a class="header" href="#what-is-rusty-celery" id="what-is-rusty-celery">What is Rusty Celery?</a></h1>
+<p>Simply put, this is a Rust implementation of the <a href="http://www.celeryproject.org/">Celery</a> protocol for producing and consuming asyncronous tasks with a distributed message broker.
+It comes with an idiomatic async API driven by the performant <a href="https://tokio.rs/">tokio.rs</a>, and above all an emphasis on safety.</p>
+<h3><a class="header" href="#how-does-it-work" id="how-does-it-work">How does it work?</a></h3>
+<p>Celery revolves around the concept of a <strong>task</strong>. A task is a unit of work that is requested by a producer to be completed by a consumer / worker.</p>
+<p>For example, a social media service may need tasks to notify a user's followers when they post new content. When a user uploads their content to the service's website, the website's backend would act as the producer sending out the tasks to a set of workers - usually deployed on a separate server or cluster - via a distributed message broker.</p>
+<p>A <a href="https://docs.rs/celery/*/celery/struct.Celery.html"><code>Celery</code></a> application instance is meant to serve as either the producer or the consumer. In this example, both the website backend and the worker applications would initialize a <code>Celery</code> app in the same way, with the exact same configuration. The web backend would then call <a href="https://docs.rs/celery/*/celery/struct.Celery.html#method.send_task"><code>Celery::send_task</code></a> to produce a task which a worker would receive while it is consuming tasks through the <a href="https://docs.rs/celery/*/celery/struct.Celery.html#method.consume"><code>Celery::consume</code></a> method.</p>
+<h3><a class="header" href="#built-to-scale" id="built-to-scale">Built to scale</a></h3>
+<p>The Celery framework is a multiple producer, multiple consumer setup: any number of producer applications can send tasks to any number of workers. Naturally this allows seamless horizontal scaling.</p>
+<h3><a class="header" href="#what-do-i-need" id="what-do-i-need">What do I need?</a></h3>
+<p>The <a href="https://docs.rs/celery/*/celery/broker/trait.Broker.html"><code>Broker</code></a> is an integral part in all of this, providing the channel through which producers communicate to consumers and distributing tasks among the available workers. As of writing this, the only officially supported broker is the <a href="https://docs.rs/celery/*/celery/broker/struct.AMQPBroker.html"><code>AMQPBroker</code></a> which can be used with a <a href="https://www.rabbitmq.com/">RabbitMQ</a> instance. The RabbitMQ instance would be the actual <strong>broker</strong>, while the <code>AMQPBroker</code> struct provides the API that the <code>Celery</code> app uses to communicate with it.</p>
+<p>There are many RabbitMQ hosting services available, such as <a href="https://www.cloudamqp.com/">CloudAMQP</a> and <a href="https://www.compose.com/databases/rabbitmq">Compose</a>. Both of these have free tier options for development purposes.</p>
+<br/>
+<br/>
+<hr />
+<p>Rusty Celery is <a href="https://github.com/rusty-celery">developed on GitHub</a> as an open source community effort.</p>
+<p><a href="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/links/0"><img src="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/images/0" alt="" /></a><a href="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/links/1"><img src="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/images/1" alt="" /></a><a href="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/links/2"><img src="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/images/2" alt="" /></a><a href="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/links/3"><img src="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/images/3" alt="" /></a><a href="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/links/4"><img src="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/images/4" alt="" /></a><a href="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/links/5"><img src="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/images/5" alt="" /></a><a href="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/links/6"><img src="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/images/6" alt="" /></a><a href="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/links/7"><img src="https://sourcerer.io/fame/epwalsh/rusty-celery/rusty-celery/images/7" alt="" /></a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+                            <a rel="next" href="quick-start.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+                    <a rel="next" href="quick-start.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
