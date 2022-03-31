@@ -97,7 +97,7 @@ From another terminal you can then send tasks to the worker from Rust with
 cargo run --example celery_app produce
 ```
 
-If you have Python and the [celery](http://www.celeryproject.org/) Python library installed, you can also consume or produce tasks from the Python app with
+If you have Python and the [celery](https://docs.celeryq.dev/en/stable/) Python library installed, you can also consume or produce tasks from the Python app with
 
 ```bash
 python examples/celery_app.py consume
