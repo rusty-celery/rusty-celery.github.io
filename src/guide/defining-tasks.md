@@ -53,7 +53,7 @@ There are two error kinds in particular that are meant as catch-alls for any oth
 
 ## Positional vs keyword parameters
 
-Within the [Celery protocol](https://docs.celeryproject.org/en/latest/internals/protocol.html#version-2)
+Within the [Celery protocol](https://docs.celeryq.dev/en/latest/internals/protocol.html#version-2)
 task parameters can be treated as either `args` (positional) or `kwargs` (key-word based).
 Both are supported in Rusty Celery, which means you could call the Rust `add` task defined above from another language like Python in any of the following ways:
 

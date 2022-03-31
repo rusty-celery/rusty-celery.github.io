@@ -4,7 +4,7 @@
 
 Tasks are only removed from a queue when they are acknowledged ("acked") by the worker that received them. The [`acks_late`](https://docs.rs/celery/*/celery/struct.CeleryBuilder.html#method.acks_late) setting determines when a worker will ack a task. When set to `true`, tasks are acked after the worker finishes executing them. When set to `false`, they are executed right before the worker starts executing them.
 
-The default of `acks_late` is `false`, however if your tasks are [idempotent](https://docs.celeryproject.org/en/stable/glossary.html#term-idempotent) it's strongly recommended that you set `acks_late` to `true`. This has two major benefits.
+The default of `acks_late` is `false`, however if your tasks are [idempotent](https://docs.celeryq.dev/en/stable/glossary.html#term-idempotent) it's strongly recommended that you set `acks_late` to `true`. This has two major benefits.
 
 First, it ensures that if a worker were to crash, any tasks currently executing will be retried automatically by the next available worker.
 

@@ -33,7 +33,7 @@
 
 # What is Rusty Celery?
 
-Simply put, this is a Rust implementation of the [Celery](http://www.celeryproject.org/) protocol for producing and consuming asyncronous tasks with a distributed message broker.
+Simply put, this is a Rust implementation of the [Celery](https://docs.celeryq.dev/) protocol for producing and consuming asyncronous tasks with a distributed message broker.
 It comes with an idiomatic async API driven by the performant [tokio.rs](https://tokio.rs/), and above all an emphasis on safety.
 
 ### How does it work?
